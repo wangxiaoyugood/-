@@ -1,0 +1,82 @@
+spring:
+  #静态资源处理
+#  resources:
+#    cache:
+#      cachecontrol:
+#        max-age: 3600
+#    chain:
+#      cache: true
+#      enabled: true
+#      compressed: true
+#    add-mappings: true
+
+  thymeleaf:
+    cache: false
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://8.130.21.187:3305/seckill?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    hikari:
+      pool-name: DateHikariCP
+      minimum-idle: 5
+      idle-timeout: 180000
+      maximum-pool-size: 10
+      auto-commit: true
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+
+  redis:
+#    host: 172.28.158.122
+    host: 8.130.21.187
+#    host: localhost
+#    host: 127.0.0.1
+    port: 6379
+    database: 0
+    timeout: 10000ms
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: 10000ms
+        max-idle: 200
+        min-idle: 5
+    password: 123456
+
+  rabbitmq:
+    host: 8.130.21.187
+    username: guest
+    password: guest
+    #虚拟主机
+    virtual-host: /
+    port: 5672
+    listener:
+      simple:
+#        消费者最小数量
+        concurrency: 10
+#       消费者最大数量
+        max-concurrency: 10
+#        限制消费者每次处理一条消息
+        prefetch: 1
+#        启动时默认启动容器
+        auto-startup: true
+#        被拒绝时重新进入队列
+        default-requeue-rejected: true
+    template:
+      retry:
+        enabled: true
+        initial-interval: 1000ms
+        max-attempts: 3
+        max-interval: 1000ms
+        multiplier: 1
+
+
+
+mybatis-plus:
+  mapper-locations: classpath*:mapper/*Mapper.xml
+  type-aliases-package: com.wang.seckill.pojo
+
+
+logging:
+  level:
+    com.wang.seckill.mapper: debug
